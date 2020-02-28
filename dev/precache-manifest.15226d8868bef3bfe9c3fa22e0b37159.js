@@ -32,7 +32,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/coding-2-try-phaser-Sghulam22/devgen.vendors.a047ee0740c7d21714d9.bundle.js"
   },
   {
-    "revision": "56e1706efc8ddae13d7bc3850e2fa8bb",
+    "revision": "a99b1d495315167d060489fde98fe966",
     "url": "/coding-2-try-phaser-Sghulam22/devindex.html"
   },
   {

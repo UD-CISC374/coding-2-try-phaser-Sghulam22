@@ -24,7 +24,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "assets/spaceship.png"
   },
   {
-    "revision": "d15d040d3d4ae248a5a0c1ca377b1e53",
+    "revision": "5e75ac1a64b7f60de4b3cc0b004c96a4",
     "url": "index.html"
   },
   {
