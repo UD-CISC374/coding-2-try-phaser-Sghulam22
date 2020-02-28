@@ -90,73 +90,45 @@ export default class MainScene extends Phaser.Scene {
     this.ship4.setScale(.15);    
     this.player.setScale(.2);
 
-
-    //hitting enemy with bullet
-    this.physics.add.collider(this.bullets, this.enemies, function(projectile,enemy) {
-      projectile.destroy();  
-    });
-
-
+    
      this.physics.add.overlap(this.player, this.enemies, this.hurtPlayer);
      this.physics.add.overlap(this.bullets, this.enemies, this.hitEnemy);
-
   }
 
 
-  hurtPlayer() {
+  hurtPlayer(player,enemy) {
     
-    this.add.text(250, 100, "game over", {
-      font: "50px Arial",
-      fill: "yellow"
-    });
-
+    player.x=100;
+    player.y=150
+    let num = Phaser.Math.Between(100,280);
+    enemy.y = num;
+    enemy.x = Phaser.Math.Between(800,1500);
   }
 
   async update() {
 
 
-    let d = new Date(); // for now
-    d.getHours(); // => 9
-    d.getMinutes(); // =>  30
-    d.getSeconds(); // => 51
-      
-  
-
+    let d = new Date();
+ 
     //this moves the background
     this.background.tilePositionX +=2;
    
-
     //this function calls repeatedly move the ships to the left. the second param is the speed.
     this.moveObject(this.ship,this.speed);
     this.moveObject(this.ship2,this.speed2);
     this.moveObject(this.ship3,this.speed3);
     this.moveObject(this.ship4,this.speed4);
 
-    // this.moveObject(this.ghost,3);
-    // this.moveObject(this.rocket,4);
-    // this.moveObject(this.coin,3);
-    // this.moveObject(this.coin1,4);
-    // this.moveObject(this.coin2,4);
-    // this.moveObject(this.heart,2.9);
-
-    //rotates the coins
-    // this.coin.angle+=2;
-    // this.coin1.angle+=2;
-    // this.coin2.angle+=2; 
-
     //moves the player up or down based on key press
     this.playerMoves(this.player,this.keys);  
   
 
-    if(this.shoot(this.keys)==true && ((d.getMilliseconds()-this.sec)>500 || this.sec > d.getMilliseconds()))
+    //make sure the player shoots every .3 secs
+    if(this.shoot(this.keys)==true && ((d.getMilliseconds()-this.sec)>300 || this.sec > d.getMilliseconds()))
     {
-      //let laser = new beam(this,this.player.x,this.player.y)
-
       this.bullets[this.bullets.length] = new beam(this,this.player.x,this.player.y).setScale(.05);
       this.temp = new Date();
       this.sec=this.temp.getMilliseconds();      
-      console.log(this.sec);
-      console.log(this.enemies.getLength);
     }
 
     
@@ -182,6 +154,8 @@ export default class MainScene extends Phaser.Scene {
     if(this.player.y>270)
       this.lowerbounds(this.player);
 
+
+
     //checks if the objects have touched the left of the screen to reset position
     if(this.ship.x<0){
       this.resetObject(this.ship,this.speed);
@@ -198,24 +172,22 @@ export default class MainScene extends Phaser.Scene {
     if(this.ship4.x<0){
       this.resetObject(this.ship4,this.speed4);
     }
+
    }
 
   moveLaser(laser)
   {
     laser.x+=5;
    }
+
+  //checks if the spacebar was pressed down
   shoot(keys):boolean
   {
-      // this.laser = this.physics.add.image(player.x,player.y,"laser");
-      // this.laser.setScale(.05)
-
       if(keys.space.isDown){
-          //console.log("space");
           return true;
       }
       return false;
-      //this.moveObject(this.laser,2);
-    }
+  }
   
 
   //moves player up or down based on key input
@@ -257,10 +229,13 @@ export default class MainScene extends Phaser.Scene {
     speed=  Phaser.Math.Between(4,7)
   }
 
-  hitEnemy(projectile, enemy) {
+  hitEnemy(projectile, object) {
     projectile.destroy();
-    this.resetObject(enemy,this.speed1);
-  }
+    
+    let num = Phaser.Math.Between(100,280);
+    object.y = num;
+    object.x = Phaser.Math.Between(800,1500);
+    }
 
   destroy(ship,speed)
   {
