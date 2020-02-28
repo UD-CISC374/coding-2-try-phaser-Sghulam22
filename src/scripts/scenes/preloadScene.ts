@@ -11,11 +11,11 @@ export default class PreloadScene extends Phaser.Scene {
 
   preload() {
     //this.load.image("background","../src/assets/background.png")
-    this.load.image("background","../src/assets/jungle.jpg");
-    this.load.image("heart","../src/assets/heart.png")
-    this.load.image("player","../src/assets/player.png");
-    this.load.image("beam","../src/assets/laser.png")
-    this.load.image("spaceship","../src/assets/spaceship.png")
+    this.load.image("background","assets/jungle.jpg");
+    this.load.image("heart","assets/heart.png")
+    this.load.image("player","assets/player.png");
+    this.load.image("beam","assets/laser.png")
+    this.load.image("spaceship","assets/spaceship.png")
 
   }
 
