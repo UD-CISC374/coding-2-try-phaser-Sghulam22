@@ -24,7 +24,7 @@ module.exports = (env) => {
         });
 
     // Get game name from Manifest
-    let gameUrl = process.env.npm_package_name;
+    let gameUrl = "coding-2-try-phaser-Sghulam22"
 
     // Update the index file for the dist directory
     // Directory
