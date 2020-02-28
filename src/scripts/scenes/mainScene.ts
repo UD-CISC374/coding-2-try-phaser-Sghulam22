@@ -29,7 +29,11 @@ export default class MainScene extends Phaser.Scene {
   shipArr: Array<Phaser.GameObjects.Image> =[]
   enemies: Phaser.Physics.Arcade.Group;
   speed1:number=4;
-  life:number= 3;
+  life:number;
+  score:number;
+ 
+  healthlabel: Phaser.GameObjects.Text;
+  scorelabel: Phaser.GameObjects.Text;
 
 
   constructor() {
@@ -38,11 +42,12 @@ export default class MainScene extends Phaser.Scene {
 
   create() {
 
-   this.speed=5;
-   this.speed2=4;
-   this.speed3=4.5;
-   this.speed4=6;
-
+    this.speed=5;
+    this.speed2=4;
+    this.speed3=4.5;
+    this.speed4=6;
+    this.life=3;
+    this.score=0;
 
     let d = new Date();
     this.sec=d.getSeconds();
@@ -61,6 +66,7 @@ export default class MainScene extends Phaser.Scene {
     this.ship4=this.physics.add.image(Phaser.Math.Between(1000,2000),Phaser.Math.Between(100,300),"spaceship");
     this.player = this.physics.add.sprite(110,150,"player",0)
 
+    this.player.setSize(20,70);
 
     this.shipArr.push(this.ship);
     this.shipArr.push(this.ship2);
@@ -73,6 +79,7 @@ export default class MainScene extends Phaser.Scene {
     this.enemies.add(this.ship3);
     this.enemies.add(this.ship4);
 
+    
     this.ship.setInteractive();
     this.ship2.setInteractive();
     this.ship3.setInteractive();
@@ -91,20 +98,11 @@ export default class MainScene extends Phaser.Scene {
     this.player.setScale(.2);
 
     
-     this.physics.add.overlap(this.player, this.enemies, this.hurtPlayer);
-     this.physics.add.overlap(this.bullets, this.enemies, this.hitEnemy);
+     this.physics.add.overlap(this.player, this.enemies, this.hurtPlayer,this.null,this);
+     this.physics.add.overlap(this.bullets, this.enemies, this.hitEnemy,this.null,this);
   }
 
-
-  hurtPlayer(player,enemy) {
-    
-    player.x=100;
-    player.y=150
-    let num = Phaser.Math.Between(100,280);
-    enemy.y = num;
-    enemy.x = Phaser.Math.Between(800,1500);
-  }
-
+  
   async update() {
 
 
@@ -124,7 +122,7 @@ export default class MainScene extends Phaser.Scene {
   
 
     //make sure the player shoots every .3 secs
-    if(this.shoot(this.keys)==true && ((d.getMilliseconds()-this.sec)>300 || this.sec > d.getMilliseconds()))
+    if(this.shoot(this.keys)==true && ((d.getMilliseconds()-this.sec)>400 || this.sec > d.getMilliseconds()))
     {
       this.bullets[this.bullets.length] = new beam(this,this.player.x,this.player.y).setScale(.05);
       this.temp = new Date();
@@ -175,10 +173,32 @@ export default class MainScene extends Phaser.Scene {
 
    }
 
+  //null callback function
+  null()
+  {
+  }
+
+  hurtPlayer(player,enemy) {
+    
+    player.x=100;
+    player.y=150
+    this.resetObject(enemy,this.speed1);
+    this.life =this.life -1;
+        
+     if(this.life<0)
+     {
+        this.scene.pause("MainScene");
+        this.add.text(200, 150, "game over", {
+          font: "25px Arial",
+          fill: "yellow"
+        });
+      }
+    }
+   
   moveLaser(laser)
   {
     laser.x+=5;
-   }
+  }
 
   //checks if the spacebar was pressed down
   shoot(keys):boolean
@@ -226,19 +246,30 @@ export default class MainScene extends Phaser.Scene {
     let num = Phaser.Math.Between(100,280);
     object.y = num;
     object.x = Phaser.Math.Between(800,1500);
-    speed=  Phaser.Math.Between(4,7)
+    speed=  Phaser.Math.Between(6,9)
   }
 
-  hitEnemy(projectile, object) {
+  //callback function that resets object when hit
+  hitEnemy(projectile, object) 
+  {
     projectile.destroy();
-    
-    let num = Phaser.Math.Between(100,280);
-    object.y = num;
-    object.x = Phaser.Math.Between(800,1500);
+    this.resetObject(object,this.speed1);
+    this.score++;
+
+    if(this.score>25){
+      this.scene.pause("MainScene");
+      this.add.text(200, 150, "You win", {
+        font: "25px Arial",
+        fill: "yellow"
+      });
     }
+
+  }
+
+
 
   destroy(ship,speed)
   {
-       this.resetObject(ship,speed);   
+    this.resetObject(ship,speed);   
   }
 }
