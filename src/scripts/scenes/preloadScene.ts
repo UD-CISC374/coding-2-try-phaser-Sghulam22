@@ -15,7 +15,8 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image("heart","assets/heart.png")
     this.load.image("player","assets/player.png");
     this.load.image("beam","assets/laser.png")
-    this.load.image("spaceship","hjassets/spaceship.png")
+    //this.load.image("spaceship","assets/spaceship.png")
+    this.load.image("spaceship","assets/spaceship.png")
     this.load.audio("shot","assets/shot.mp3")
     this.load.audio("hit","assets/destroy.mp3")
 

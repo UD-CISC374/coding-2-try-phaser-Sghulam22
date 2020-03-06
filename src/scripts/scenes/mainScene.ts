@@ -110,9 +110,8 @@ export default class MainScene extends Phaser.Scene {
   
   async update() {
 
-
     let d = new Date();
- 
+    this.shot.play();
     //this moves the background
     this.background.tilePositionX +=2;
    
