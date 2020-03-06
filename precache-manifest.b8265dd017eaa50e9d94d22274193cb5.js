@@ -4,6 +4,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "assets/citations.md"
   },
   {
+    "revision": "f17de84ebb3fd5141fe214eeb75ce6d4",
+    "url": "assets/destroy.mp3"
+  },
+  {
     "revision": "1d60fcac2f6c24de41b791a3f043c118",
     "url": "assets/jungle.jpg"
   },
@@ -16,6 +20,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "assets/player.png"
   },
   {
+    "revision": "1f73fb8da68c43d741113aa03155a334",
+    "url": "assets/shot.mp3"
+  },
+  {
     "revision": "e217cee6e6eaf232f6bd0e2cab85d632",
     "url": "assets/space.jpg"
   },
@@ -24,12 +32,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "assets/spaceship.png"
   },
   {
-    "revision": "d5618cb679f9194576c6510e67cc6541",
+    "revision": "ae8b2e069e8c8e731702d98c93e96020",
     "url": "index.html"
   },
   {
-    "revision": "8bc13b10aa428a86f892",
-    "url": "main.f681b550023c2bec30e1.bundle.js"
+    "revision": "9b96ee76e947ebe87fdd",
+    "url": "main.fd8485b80c830be3a46a.bundle.js"
   },
   {
     "revision": "b4321e6f6a88a978d4964c0d1b432b03",
