@@ -16,6 +16,7 @@ export default class MainScene extends Phaser.Scene {
   ship2: Phaser.GameObjects.Image;
   ship3: Phaser.GameObjects.Image;
   ship4: Phaser.GameObjects.Image;
+  
   keys: Phaser.Types.Input.Keyboard.CursorKeys;
   spacebar: Phaser.Input.Keyboard.Key;
   bullets: Array<beam> =[];
@@ -34,6 +35,9 @@ export default class MainScene extends Phaser.Scene {
  
   healthlabel: Phaser.GameObjects.Text;
   scorelabel: Phaser.GameObjects.Text;
+  shot: Phaser.Sound.BaseSound;
+  hit: Phaser.Sound.BaseSound;
+
 
 
   constructor() {
@@ -65,6 +69,8 @@ export default class MainScene extends Phaser.Scene {
     this.ship3=this.physics.add.image(Phaser.Math.Between(2000,2500),Phaser.Math.Between(100,300),"spaceship");
     this.ship4=this.physics.add.image(Phaser.Math.Between(1000,2000),Phaser.Math.Between(100,300),"spaceship");
     this.player = this.physics.add.sprite(110,150,"player",0)
+    this.shot = this.sound.add("shot");
+    this.hit = this.sound.add("destroy");
 
     this.player.setSize(20,70);
 
@@ -97,9 +103,8 @@ export default class MainScene extends Phaser.Scene {
     this.ship4.setScale(.15);    
     this.player.setScale(.2);
 
-    
-     this.physics.add.overlap(this.player, this.enemies, this.hurtPlayer,this.null,this);
-     this.physics.add.overlap(this.bullets, this.enemies, this.hitEnemy,this.null,this);
+     this.physics.add.overlap(this.player, this.enemies, this.hurtPlayer,undefined,this);
+     this.physics.add.overlap(this.bullets, this.enemies, this.hitEnemy,undefined,this);
   }
 
   
@@ -126,7 +131,8 @@ export default class MainScene extends Phaser.Scene {
     {
       this.bullets[this.bullets.length] = new beam(this,this.player.x,this.player.y).setScale(.05);
       this.temp = new Date();
-      this.sec=this.temp.getMilliseconds();      
+      this.sec=this.temp.getMilliseconds();  
+      this.shot.play(); 
     }
 
     
@@ -173,11 +179,7 @@ export default class MainScene extends Phaser.Scene {
 
    }
 
-  //null callback function
-  null()
-  {
-  }
-
+  //function that gets called when the enemy hits the player
   hurtPlayer(player,enemy) {
     
     player.x=100;
@@ -195,6 +197,7 @@ export default class MainScene extends Phaser.Scene {
       }
     }
    
+  //constantly moves player bullets
   moveLaser(laser)
   {
     laser.x+=5;
@@ -265,8 +268,6 @@ export default class MainScene extends Phaser.Scene {
     }
 
   }
-
-
 
   destroy(ship,speed)
   {
