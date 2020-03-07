@@ -70,7 +70,7 @@ export default class MainScene extends Phaser.Scene {
     this.ship4=this.physics.add.image(Phaser.Math.Between(1000,2000),Phaser.Math.Between(100,300),"spaceship");
     this.player = this.physics.add.sprite(110,150,"player",0)
     this.shot = this.sound.add("shot");
-    this.hit = this.sound.add("destroy");
+    this.hit = this.sound.add("hit");
 
     this.player.setSize(20,70);
 
@@ -111,7 +111,7 @@ export default class MainScene extends Phaser.Scene {
   async update() {
 
     let d = new Date();
-    this.shot.play();
+    //this.shot.play();
     //this moves the background
     this.background.tilePositionX +=2;
    
@@ -257,6 +257,7 @@ export default class MainScene extends Phaser.Scene {
     projectile.destroy();
     this.resetObject(object,this.speed1);
     this.score++;
+    this.hit.play();
 
     if(this.score>25){
       this.scene.pause("MainScene");
